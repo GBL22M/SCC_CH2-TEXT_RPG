@@ -32,7 +32,7 @@ public:
 	void SetGold(int gold);
 	void SetInventory(Item* item);
 	void SetAttack(int attack);
-	
+	void SetTotalMonsterKills();
 	void PopInventoryItem();
 
 protected:
@@ -47,6 +47,7 @@ private:
 	int mAttack;
 	int mExperience;
 	int mGold;
+	int mTotalMonsterKills;
 	vector<Item*> mInventory;	
 
 	//

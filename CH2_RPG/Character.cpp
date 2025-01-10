@@ -19,6 +19,7 @@ void Character::DisplayStatus()
     cout << "레벨: " << mLevel << "\n";
     cout << "체력: " << mHealth << "\n";
     cout << "공격력: " << mAttack << "\n";
+    cout << "처치한 몬스터 수: " << mTotalMonsterKills << "\n";
     cout << "골드: " << mGold << "\n";
 }
 
@@ -98,12 +99,17 @@ void Character::SetAttack(int attack)
     mAttack += attack;
 }
 
+void Character::SetTotalMonsterKills()
+{
+    mTotalMonsterKills++;
+}
+
 void Character::PopInventoryItem()
 {
     mInventory.pop_back();
 }
 
-//protected
+//protected constructor
 Character::Character(string name)
     :mName(name)
     , mLevel(1)
@@ -112,6 +118,7 @@ Character::Character(string name)
     , mAttack(30)
     , mExperience(0)
     , mGold(0)
+    ,mTotalMonsterKills(0)    
 {
     if (name.empty())
     {

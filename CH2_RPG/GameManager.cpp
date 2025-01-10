@@ -52,6 +52,7 @@ bool GameManager::Battle(Character* player)
         if (monster->GetHealth() == 0)
         {
             cout << monster->GetName() << " 이(가) 죽었습니다.\n";
+            player->SetTotalMonsterKills();
             int golds = GetRandomInt(10, 20);
             cout << player->GetName() << " 이(가) 50EXP와 " << golds << " 골드를 획득했습니다.";    
 
