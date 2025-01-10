@@ -109,7 +109,7 @@ bool GameManager::Battle(Character* player)
         {
             cout << player->GetName() << " 이(가) 죽었습니다.\n";
             cout << "게임 오버\n";     
-
+                       
             return false;
         }
     }
@@ -123,7 +123,7 @@ void GameManager::DisplayInventory(Character* player)
     }
     else
     {
-        for (auto item : player->GetInventory())
+        for (const auto& item : player->GetInventory())
         {
             cout << item->GetName() << "\n";
         }
