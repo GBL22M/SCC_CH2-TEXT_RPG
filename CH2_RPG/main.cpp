@@ -12,29 +12,29 @@ int main()
 	GameManager gameManager;
 
 	cout << "================ TEXT RPG ================\n";
-	cout << "Ä³¸¯ÅÍ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä: ";
+	cout << "ìºë¦­í„° ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”: ";
 	string name;
 	getline(cin, name);
 
 	Character* character = Character::GetInstance(name);
-	cout << "\nÄ³¸¯ÅÍ »ı¼º ¿Ï·á!\n";
+	cout << "\nìºë¦­í„° ìƒì„± ì™„ë£Œ!\n";
 	character->DisplayStatus();
-	cout << "¸ğÇèÀ» ½ÃÀÛÇÕ´Ï´Ù\n";
+	cout << "ëª¨í—˜ì„ ì‹œì‘í•©ë‹ˆë‹¤\n";
 	system("pause");
 	system("cls");
 
-	//Á¾·á Á¶°Ç
+	//ì¢…ë£Œ ì¡°ê±´
 	while (1)
 	{
 		cout << "\n============STATUS==================\n\n";
 		character->DisplayStatus();
 		cout << "\n===================================\n\n";
-		cout << "1: ÀüÅõ\n";
-		cout << "2: ÀÎº¥Åä¸®\n";
-		cout << "3: »óÁ¡\n";
-		cout << "0: °ÔÀÓ Á¾·á\n";
+		cout << "1: ì „íˆ¬\n";
+		cout << "2: ì¸ë²¤í† ë¦¬\n";
+		cout << "3: ìƒì \n";
+		cout << "0: ê²Œì„ ì¢…ë£Œ\n";
 		cout << "\n===================================\n";
-		cout << "¿øÇÏ´Â ¸Ş´º¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
+		cout << "ì›í•˜ëŠ” ë©”ë‰´ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ";
 
 		string choice;
 		getline(cin, choice);
@@ -43,12 +43,12 @@ int main()
 
 		if (choice == "1")
 		{
-			//monster Ã³Ä¡
+			//monster ì²˜ì¹˜
 			if (gameManager.Battle(character))
 			{
 
 			}
-			//game Á¾·á
+			//game ì¢…ë£Œ
 			else
 			{
 				return 0;
@@ -56,7 +56,7 @@ int main()
 		}
 		else if (choice == "2")
 		{
-			//ÀÎº¥Åä¸®
+			//ì¸ë²¤í† ë¦¬
 			system("cls");
 			cout << "\n============INVENTORY==================\n\n";
 			gameManager.DisplayInventory(character);
@@ -66,20 +66,20 @@ int main()
 		}
 		else if (choice == "3")
 		{
-			//»óÁ¡
+			//ìƒì 
 			system("cls");
 			gameManager.UseShop(character);
 		}
 		else if (choice == "0")
 		{
-			cout << "°ÔÀÓ Á¾·á!\n";
+			cout << "ê²Œì„ ì¢…ë£Œ!\n";
 			return 0;
 		}
 		else
 		{
 			while (choice != "1" && choice != "2" && choice != "3" && choice == "0")
 			{
-				cout << "¿Ã¹Ù¸¥ ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
+				cout << "ì˜¬ë°”ë¥¸ ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”: ";
 				getline(cin, choice);
 			}
 		}
