@@ -135,6 +135,7 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="RandomIntGenerator.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="Troll.h" />
   </ItemGroup>
