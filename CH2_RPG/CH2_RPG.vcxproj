@@ -136,6 +136,7 @@
     <ClInclude Include="Orc.h" />
     <ClInclude Include="RandomIntGenerator.h" />
     <ClInclude Include="Shop.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="Troll.h" />
     <ClInclude Include="Weapon.h" />
