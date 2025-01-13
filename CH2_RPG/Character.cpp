@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Character.h"
 #include "Item.h"
 
@@ -107,6 +107,11 @@ void Character::SetTotalMonsterKills()
 void Character::PopInventoryItem()
 {
     mInventory.pop_back();
+}
+
+void Character::SellItem(int idx)
+{
+    mInventory.erase(mInventory.begin() + idx);
 }
 
 //protected constructor

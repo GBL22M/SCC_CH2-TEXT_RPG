@@ -1,4 +1,4 @@
-#include "RandomIntGenerator.h"
+﻿#include "RandomIntGenerator.h"
 #include "Slime.h"
 
 Slime::Slime(int level)

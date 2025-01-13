@@ -1,4 +1,4 @@
-#include "RandomIntGenerator.h"
+﻿#include "RandomIntGenerator.h"
 
 int GetRandomInt(int min, int max)
 {
