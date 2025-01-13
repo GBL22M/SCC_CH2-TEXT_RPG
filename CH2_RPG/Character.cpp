@@ -24,7 +24,7 @@ void Character::DisplayStatus()
 }
 
 void Character::LevelUp()
-{    
+{
     //레벨 올려주고, 경험치 초기화
     mLevel++;
     mExperience = 0;
@@ -49,7 +49,7 @@ void Character::UseItem(int index)
 {
     //health 포션
     if (index == 0)
-    {        
+    {
         cout << "체력 물약 사용! 현재 체력: " << mHealth << "\n";
     }
     //attack 포션
@@ -109,6 +109,13 @@ void Character::PopInventoryItem()
     mInventory.pop_back();
 }
 
+int Character::UseSkill(ABNOMAL_STATUS as)
+{
+    tSkillTable[as].iCooldown = tSkillTable[as].iCoolTime;
+
+    return tSkillTable[as].iDuration;
+}
+
 //protected constructor
 Character::Character(string name)
     :mName(name)
@@ -118,7 +125,7 @@ Character::Character(string name)
     , mAttack(30)
     , mExperience(0)
     , mGold(0)
-    ,mTotalMonsterKills(0)    
+    , mTotalMonsterKills(0)
 {
     if (name.empty())
     {
