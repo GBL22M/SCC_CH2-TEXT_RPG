@@ -7,8 +7,6 @@ using namespace std;
 
 int main()
 {
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
 	GameManager gameManager;
 
 	cout << "================ TEXT RPG ================\n";
@@ -46,9 +44,12 @@ int main()
 			//monster 처치
 			if (gameManager.Battle(character))
 			{
-
+				if (gameManager.GetGameOverFlag())
+				{
+					return 0;
+				}
 			}
-			//game 종료
+			//game 종료 (player 사망)
 			else
 			{
 				return 0;

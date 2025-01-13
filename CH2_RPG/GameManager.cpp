@@ -2,8 +2,9 @@
 #include <random>
 
 #include "GameManager.h"
-#include "Goblin.h"
 
+#include "BossMonster.h"
+#include "Goblin.h"
 #include "Slime.h"
 #include "Orc.h"
 #include "Troll.h"
@@ -15,17 +16,23 @@
 
 Monster* GameManager::GenerateMonster(int level)
 {
-    int idx = GetRandomInt(0, mTotalMonsterCount);
     Monster* monster = nullptr;
 
-    if (idx == 0)
-        monster = new Goblin(level);
-    else if (idx == 1)
-        monster = new Orc(level);
-    else if (idx == 2)
-        monster = new Troll(level);
-    else if (idx == 3)
-        monster = new Slime(level);
+    if (level == 10)
+        monster = new BossMonster(level);
+    else
+    {
+        int idx = GetRandomInt(0, mTotalMonsterCount);
+
+        if (idx == 0)
+            monster = new Goblin(level);
+        else if (idx == 1)
+            monster = new Orc(level);
+        else if (idx == 2)
+            monster = new Troll(level);
+        else if (idx == 3)
+            monster = new Slime(level);
+    }
 
     return monster;
 }
@@ -57,7 +64,9 @@ bool GameManager::Battle(Character* player)
         }
 
         if (iMenu == BATTLE_BACK)
-            return true;
+            return true;        
+
+        cout << "\n\n";
 
         switch (iMenu) {
         case BATTEL_ATTACK:
@@ -229,20 +238,36 @@ bool GameManager::Battle(Character* player)
                         << player->GetName() << " 체력: " << player->GetHealth() << "\n";
                 }
             }
+            //[monster attack]
             else {
                 cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다";
                 player->SetHealth(-monster->GetAttack());
                 cout << monster->GetAttack() << " 데미지! "
                     << player->GetName() << " 체력: " << player->GetHealth() << "\n";
+
+                //[boss skill attack]
+                if (monster->GetName() == "Boss Monster")
+                {
+                    int skillProbability = GetRandomInt(1, 100);
+                    if (skillProbability <= 40)
+                    {
+                        int skillDamage = static_cast<BossMonster*>(monster)->SkillAttackDamage();
+                        cout << monster->GetName() << " 의 스킬 공격!";
+                        player->SetHealth(-skillDamage);
+                        cout << skillDamage << " 데미지! "
+                            << player->GetName() << " 체력: " << player->GetHealth() << "\n";
+                    }
+                }
             }
         }
 
+        //[monster death]
         if (MonsterDeadCheck(player, monster))
             return true;
 
-        // player death
+        // [player death]
         if (PlayerDeadCheck(player))
-            return false;
+            return false;       
 
         // player skill cooldown
         if (player->tSkillTable[AS_SHOCK].iCooldown > 0)
@@ -253,81 +278,7 @@ bool GameManager::Battle(Character* player)
             player->tSkillTable[AS_DISARRAY].iCooldown--;
 
         system("pause");
-    }
-
-
-    /*
-    //플레이어가 죽거나 몬스터가 죽거나
-    while (1)
-    {
-        //player attack
-        cout << player->GetName() << " 이(가) " << monster->GetName() << " 을(를) 공격합니다";
-        monster->TakeDamage(player->GetAttack());
-        cout << player->GetAttack() << " 데미지! "
-            << monster->GetName() << " 체력: " << monster->GetHealth() << "\n";
-
-        //monster death
-        if (monster->GetHealth() == 0)
-        {
-            cout << monster->GetName() << " 이(가) 죽었습니다.\n";
-            player->SetTotalMonsterKills();
-            int golds = GetRandomInt(10, 20);
-            cout << player->GetName() << " 이(가) 50EXP와 " << golds << " 골드를 획득했습니다.";    
-
-            //item drop
-            int itemDropProbability = GetRandomInt(1, 100);
-            if (itemDropProbability <= 30)
-            {               
-                Item* item;
-                if (itemDropProbability <= 13)                  
-                {
-                    item = new HealthPotion();
-                    player->SetInventory(item);
-                }
-                else if(itemDropProbability > 13 && itemDropProbability <= 26)
-                {
-                    item = new AttackBoost();
-                    player->SetInventory(item);
-                }
-                else
-                {
-                    item = GenerateWeapon(player);
-                    player->SetInventory(item);
-                }
-            }
-
-            player->SetExperience(50);
-            player->SetGold(golds);
-
-        //monster attack
-        cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다";
-        player->SetHealth(-monster->GetAttack());
-        cout << monster->GetAttack() << " 데미지! "
-            << player->GetName() << " 체력: " << player->GetHealth() << "\n";
-
-        //random item 발동
-        int itemUsingProbability = GetRandomInt(1, 100);
-        if (itemUsingProbability <= 30)
-        {
-            //비어있지 않다면,
-            if (!player->GetInventory().empty())
-            {
-                //아이템 사용
-                Item* item = player->GetInventory().back();
-                item->Use(player);
-                player->PopInventoryItem();
-            }
-        }
-
-        //player death
-        if (player->GetHealth() == 0)
-        {
-            cout << player->GetName() << " 이(가) 죽었습니다.\n";
-            cout << "게임 오버\n";
-
-            return false;
-        }
-    }*/
+    }    
 }
 
 void GameManager::DisplayInventory(Character* player)
@@ -395,6 +346,12 @@ OPEN_SHOP:
     cout << "입력 : ";
     cin >> input;
 
+    if (cin.fail()) 
+    {
+        cin.clear();
+        cin.ignore(1024, '\n');     
+    }
+
     switch (input)
     {
     case 1:
@@ -403,6 +360,7 @@ OPEN_SHOP:
         shop->DisplayItems();
         cout << "구매할 아이템 번호 : ";
         cin >> input;
+
         if (input > FIX_ITEM + WPN_ITEM)
         {
             cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
@@ -459,6 +417,15 @@ OPEN_SHOP:
 bool GameManager::MonsterDeadCheck(Character* player, Monster* monster) {
     if (monster->GetHealth() == 0)
     {
+        if (monster->GetName() == "Boss Monster")
+        {
+            cout << monster->GetName() << " 을(를) 처치했습니다!!\n";
+            cout << "게임 클리어!\n";
+
+            GameOverFlag = true;
+            return true;
+        }
+
         cout << monster->GetName() << " 이(가) 죽었습니다.\n";
         player->SetTotalMonsterKills();
         int golds = GetRandomInt(10, 20);
@@ -508,7 +475,7 @@ bool GameManager::PlayerDeadCheck(Character* player)
         cout << player->GetName() << " 이(가) 죽었습니다.\n";
         cout << "게임 오버\n";
 
-        return false;
+        return true;
     }
 
     return false;

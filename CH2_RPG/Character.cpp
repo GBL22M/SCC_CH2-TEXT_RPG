@@ -29,7 +29,7 @@ void Character::LevelUp()
     mLevel++;
     mExperience = 0;
 
-    if (mLevel >= maxLevel)
+    if (mLevel > maxLevel)
     {
         mLevel = maxLevel;
         mHealth = mMaxHealth;

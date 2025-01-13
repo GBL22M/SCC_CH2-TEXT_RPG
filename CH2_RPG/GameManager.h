@@ -21,7 +21,8 @@ public:
 
 	bool MonsterDeadCheck(Character* player, Monster* monster);
 	bool PlayerDeadCheck(Character* player);
-
+	bool GetGameOverFlag() { return GameOverFlag; }
 private:
 	const int mTotalMonsterCount = 3;
+	bool GameOverFlag = false;
 };
