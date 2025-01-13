@@ -17,9 +17,11 @@ void Shop::DisplayItems()
 	for (int i = 0; i < AvailableItems.size(); i += 2)
 	{
 		cout << i + 1 << ". " << AvailableItems[i]->GetName() << "\t";
-		cout << i + 2 << ". " << AvailableItems[i + 1]->GetName() << endl;
+		if (i < AvailableItems.size() - 1) cout << i + 2 << ". " << AvailableItems[i + 1]->GetName() << endl;
+		else cout << endl;
 		cout << "   " << AvailableItems[i]->GetBuyPrice() << "gold" << "\t";
-		cout << "   " << AvailableItems[i + 1]->GetBuyPrice() << "gold" << endl;
+		if (i < AvailableItems.size() - 1) cout << "   " << AvailableItems[i + 1]->GetBuyPrice() << "gold" << endl;
+		else cout << endl;
 	}
 
 	cout << "\n====================================\n\n";
@@ -28,12 +30,15 @@ void Shop::DisplayItems()
 void Shop::BuyItem(int idx, Character* player)
 {
 	int PlayerGold = player->GetGold();
-	int ItemPrice = AvailableItems[idx]->GetBuyPrice();
-	
+
+	Item* BuyItem = AvailableItems[idx];
+	int ItemPrice = BuyItem->GetBuyPrice();
+
 	if (PlayerGold >= ItemPrice)
 	{
-		player->SetInventory(AvailableItems[idx]);
+		player->SetInventory(BuyItem);
 		player->SetGold(PlayerGold - ItemPrice);
+		AvailableItems.erase(AvailableItems.begin() + idx);
 	}
 	else
 		cout << "골드가 부족하여 구매에 실패했습니다." << endl;
