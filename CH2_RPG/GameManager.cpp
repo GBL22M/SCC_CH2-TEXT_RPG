@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <random>
 
 #include "GameManager.h"
@@ -9,6 +9,7 @@
 #include "Orc.h"
 #include "Troll.h"
 
+#include "Shop.h"
 #include "Item.h"
 #include "HealthPotion.h"
 #include "AttackBoost.h"
@@ -59,15 +60,21 @@ bool GameManager::Battle(Character* player)
             //item drop
             int itemDropProbability = GetRandomInt(1, 100);
             if (itemDropProbability <= 30)
-            {                
-                if (itemDropProbability <= 15)
+            {               
+                Item* item;
+                if (itemDropProbability <= 13)                  
                 {
-                    Item* item = new HealthPotion();
+                    item = new HealthPotion();
+                    player->SetInventory(item);
+                }
+                else if(itemDropProbability > 13 && itemDropProbability <= 26)
+                {
+                    item = new AttackBoost();
                     player->SetInventory(item);
                 }
                 else
                 {
-                    Item* item = new AttackBoost();
+                    item = GenerateWeapon(player);
                     player->SetInventory(item);
                 }
             }
@@ -123,10 +130,121 @@ void GameManager::DisplayInventory(Character* player)
     }
     else
     {
+        int idx = 0;
         for (auto item : player->GetInventory())
         {
-            cout << item->GetName() << "\n";
+            cout << ++idx << ". ";
+            item->printInfo();
         }
     }
+}
+
+// 아이템 생성
+Item* GameManager::GenerateWeapon(Character* player)
+{
+    Item* NewItem;
+    
+    int Lucky = GetRandomInt(1, 10) * player->GetLevel();
+
+    // Drop quality based on player level
+    if (Lucky < 20)
+    {
+        NewItem = new Weapon("나무 몽둥이", Lucky + GetRandomInt(-1, 1), 0);
+    }
+    else if (Lucky >= 20 && Lucky < 30)
+    {
+        NewItem = new Weapon("연습용 검", Lucky + GetRandomInt(-2, 2), 2);
+    }
+    else if (Lucky >= 30 && Lucky < 65)
+    {
+        NewItem = new Weapon("강철 도끼", Lucky + GetRandomInt(-3, 3), 5);
+    }
+    else
+    {
+        NewItem = new Weapon("엑스칼리버", Lucky + GetRandomInt(-4, 4), 8);
+    }
+
+    return NewItem;
+}
+
+// Open Shop
+void GameManager::UseShop(Character* Player)
+{
+    Shop* shop = new Shop();
+    int input;
+
+    for (int i = 0; i < WPN_ITEM; i++)
+    {
+        Item* item = GenerateWeapon(Player);        // Add random weapons based on player level
+        shop->SetItems(item);
+    }
+
+OPEN_SHOP:
+    system("cls");
+    shop->DisplayItems();
+
+    cout << "1. 구매   2. 판매  3. 정보 보기  AnyKey. 상점 나가기" << endl;
+    cout << "입력 : ";
+    cin >> input;
+
+    switch (input)
+    {
+    case 1:
+    BUY_ITEM:
+        system("cls");
+        shop->DisplayItems();
+        cout << "구매할 아이템 번호 : ";
+        cin >> input;
+        if (input > FIX_ITEM + WPN_ITEM)
+        {
+            cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
+            system("pause");
+            goto BUY_ITEM;
+        }
+        shop->BuyItem(input - 1, Player);
+        system("pause");
+        goto OPEN_SHOP;
+    case 2:
+    SELL_ITEM:
+        system("cls");
+        DisplayInventory(Player);
+        if (Player->GetInventory().size() == 0)
+        {
+            system("pause");
+            goto OPEN_SHOP;
+        }
+        cout << "판매할 아이템 번호 : ";
+        cin >> input;
+        if (input > Player->GetInventory().size())
+        {
+            cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
+            system("pause");
+            goto SELL_ITEM;
+        }
+        shop->SellItem(input - 1, Player);
+        system("pause");
+        goto OPEN_SHOP;
+    case 3:
+    PNT_INFO:
+        system("cls");
+        shop->DisplayItems();
+        cout << "정보를 확인하고 싶은 아이템 번호 : ";
+        cin >> input;
+        if (input > FIX_ITEM + WPN_ITEM)
+        {
+            cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
+            system("pause");
+            goto PNT_INFO;
+        }
+        shop->GetInfo(input - 1);
+        system("pause");
+        goto OPEN_SHOP;
+    default:
+        break;
+    }
+
+    cout << "상점 이용을 종료합니다." << endl;
+    system("pause");
+    system("cls");
 }
 

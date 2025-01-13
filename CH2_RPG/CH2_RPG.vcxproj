@@ -135,8 +135,10 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="RandomIntGenerator.h" />
+    <ClInclude Include="Shop.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="Troll.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AttackBoost.cpp" />
@@ -148,8 +150,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="RandomIntGenerator.cpp" />
+    <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="Troll.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

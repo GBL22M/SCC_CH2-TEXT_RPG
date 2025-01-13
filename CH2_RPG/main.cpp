@@ -10,74 +10,76 @@ int main()
 	GameManager gameManager;
 
 	cout << "================ TEXT RPG ================\n";
-	cout << "ìºë¦­í„° ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”: ";
+	cout << "Ä³¸¯ÅÍ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä: ";
 	string name;
 	getline(cin, name);
-	
+
 	Character* character = Character::GetInstance(name);
-	cout << "\nìºë¦­í„° ìƒì„± ì™„ë£Œ!\n";
+	cout << "\nÄ³¸¯ÅÍ »ı¼º ¿Ï·á!\n";
 	character->DisplayStatus();
-	cout << "ëª¨í—˜ì„ ì‹œì‘í•©ë‹ˆë‹¤\n";
+	cout << "¸ğÇèÀ» ½ÃÀÛÇÕ´Ï´Ù\n";
 	system("pause");
 	system("cls");
-	
-	//ì¢…ë£Œ ì¡°ê±´
+
+	//Á¾·á Á¶°Ç
 	while (1)
-	{		
+	{
 		cout << "\n============STATUS==================\n\n";
 		character->DisplayStatus();
 		cout << "\n===================================\n\n";
-		cout << "1: ì „íˆ¬\n";
-		cout << "2: ì¸ë²¤í† ë¦¬\n";
-		cout << "3: ìƒì \n";
-		cout << "0: ê²Œì„ ì¢…ë£Œ\n";
+		cout << "1: ÀüÅõ\n";
+		cout << "2: ÀÎº¥Åä¸®\n";
+		cout << "3: »óÁ¡\n";
+		cout << "0: °ÔÀÓ Á¾·á\n";
 		cout << "\n===================================\n";
-		cout << "ì›í•˜ëŠ” ë©”ë‰´ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ";
+		cout << "¿øÇÏ´Â ¸Ş´º¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
 
 		string choice;
 		getline(cin, choice);
-		
+
 		system("cls");
 
 		if (choice == "1")
 		{
-			//monster ì²˜ì¹˜
+			//monster Ã³Ä¡
 			if (gameManager.Battle(character))
 			{
-				
+
 			}
-			//game ì¢…ë£Œ
+			//game Á¾·á
 			else
 			{
 				return 0;
-			}			
+			}
 		}
 		else if (choice == "2")
 		{
-			//ì¸ë²¤í† ë¦¬
+			//ÀÎº¥Åä¸®
 			system("cls");
 			cout << "\n============INVENTORY==================\n\n";
-			gameManager.DisplayInventory(character);	
+			gameManager.DisplayInventory(character);
 			cout << "\n===================================\n\n";
 			system("pause");
 			system("cls");
 		}
 		else if (choice == "3")
 		{
-			//ìƒì 
+			//»óÁ¡
+			system("cls");
+			gameManager.UseShop(character);
 		}
 		else if (choice == "0")
 		{
-			cout << "ê²Œì„ ì¢…ë£Œ!\n";
+			cout << "°ÔÀÓ Á¾·á!\n";
 			return 0;
 		}
 		else
-		{			
+		{
 			while (choice != "1" && choice != "2" && choice != "3" && choice == "0")
-			{				
-				cout << "ì˜¬ë°”ë¥¸ ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”: ";
+			{
+				cout << "¿Ã¹Ù¸¥ ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ";
 				getline(cin, choice);
 			}
-		}		
+		}
 	}
 }

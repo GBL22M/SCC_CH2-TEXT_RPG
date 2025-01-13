@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 using namespace std;
@@ -34,6 +34,8 @@ public:
 	void SetAttack(int attack);
 	void SetTotalMonsterKills();
 	void PopInventoryItem();
+
+	void SellItem(int idx);
 
 protected:
 	Character(string name);
