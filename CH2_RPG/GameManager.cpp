@@ -456,7 +456,7 @@ OPEN_SHOP:
     system("cls");
 }
 
-bool MonsterDeadCheck(Character* player, Monster* monster) {
+bool GameManager::MonsterDeadCheck(Character* player, Monster* monster) {
     if (monster->GetHealth() == 0)
     {
         cout << monster->GetName() << " 이(가) 죽었습니다.\n";
@@ -501,7 +501,7 @@ bool MonsterDeadCheck(Character* player, Monster* monster) {
     return false;
 }
 
-bool PlayerDeadCheck(Character* player)
+bool GameManager::PlayerDeadCheck(Character* player)
 {
     if (player->GetHealth() == 0)
     {

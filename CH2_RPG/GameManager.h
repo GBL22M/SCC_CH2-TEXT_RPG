@@ -3,7 +3,6 @@
 #include "Monster.h"
 #include "Weapon.h"
 #include "RandomIntGenerator.h"
-#include "Item.h"
 #include "HealthPotion.h"
 #include "AttackBoost.h"
 
@@ -20,10 +19,9 @@ public:
 	Item* GenerateWeapon(Character* Player);
 	void UseShop(Character* Player);
 
+	bool MonsterDeadCheck(Character* player, Monster* monster);
+	bool PlayerDeadCheck(Character* player);
+
 private:
 	const int mTotalMonsterCount = 3;
 };
-
-bool MonsterDeadCheck(Character* player, Monster* monster);
-
-bool PlayerDeadCheck(Character* player);

@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Character.h"
 #include "Item.h"
 
@@ -110,16 +110,16 @@ void Character::PopInventoryItem()
 }
 
 
-void Character::SellItem(int idx)
-{
-    mInventory.erase(mInventory.begin() + idx);
-}
-
 int Character::UseSkill(ABNOMAL_STATUS as)
 {
     tSkillTable[as].iCooldown = tSkillTable[as].iCoolTime;
 
     return tSkillTable[as].iDuration;
+}
+
+void Character::SellItem(int idx)
+{
+    mInventory.erase(mInventory.begin() + idx);
 }
 
 //protected constructor
