@@ -109,6 +109,12 @@ void Character::PopInventoryItem()
     mInventory.pop_back();
 }
 
+
+void Character::SellItem(int idx)
+{
+    mInventory.erase(mInventory.begin() + idx);
+}
+
 int Character::UseSkill(ABNOMAL_STATUS as)
 {
     tSkillTable[as].iCooldown = tSkillTable[as].iCoolTime;

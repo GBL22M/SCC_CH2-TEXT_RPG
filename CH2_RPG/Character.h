@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 #include "Skill.h"
@@ -36,6 +36,8 @@ public:
 	void SetTotalMonsterKills();
 	void PopInventoryItem();
 	int UseSkill(ABNOMAL_STATUS as);
+
+	void SellItem(int idx);
 
 protected:
 	Character(string name);
