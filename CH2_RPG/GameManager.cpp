@@ -350,8 +350,10 @@ void GameManager::ManageInventory(Character* player)
                     weapon->Use(player);
                 }
                 else {
-                    selectedItem->Use(player);
-                    player->SellItem(input - 1);
+                    bool itemUsed = selectedItem->Use(player);
+                    if (itemUsed) {
+                        player->SellItem(input - 1);
+                    }
                 }
                 system("pause");
             }

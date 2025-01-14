@@ -1,4 +1,4 @@
-#include "AttackBoost.h"
+﻿#include "AttackBoost.h"
 #include "Character.h"
 
 AttackBoost::AttackBoost()
@@ -14,10 +14,11 @@ string AttackBoost::GetName()
 	return mName;
 }
 
-void AttackBoost::Use(Character* character)
+bool AttackBoost::Use(Character* character)
 {
 	character->SetAttack(mAttackIncrease);
 	character->UseItem(1);
+	return true;
 }
 
 void AttackBoost::SellItem(Character* character)

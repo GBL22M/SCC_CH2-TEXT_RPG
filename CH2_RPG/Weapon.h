@@ -13,7 +13,7 @@ public:
 		nSellPrice = (int)(nBuyPrice * 0.7);
 	}
 	string GetName() override { return sName; }
-	void Use(Character* character) override;
+	bool Use(Character* character) override;
 
 	// Price Section
 	int GetBuyPrice() { return nBuyPrice; }
