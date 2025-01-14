@@ -1,4 +1,4 @@
-﻿#include "HealthPotion.h"
+#include "HealthPotion.h"
 #include "Character.h"
 
 HealthPotion::HealthPotion()
@@ -27,5 +27,5 @@ void HealthPotion::SellItem(Character* character)
 
 void HealthPotion::printInfo()
 {
-	cout << mName << " | 회복량 : " << mHealthRestore << endl;
+	cout << mName << " | 회복량 : " << mHealthRestore << " | 판매가 : " << nSellPrice << endl;
 }
