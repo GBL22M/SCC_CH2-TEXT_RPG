@@ -38,7 +38,7 @@ void Shop::BuyItem(int idx, Character* player)
 	if (PlayerGold >= ItemPrice)
 	{
 		player->SetInventory(BuyItem);
-		player->SetGold(PlayerGold - ItemPrice);
+		player->SetGold(-ItemPrice);
 		if (idx < FIX_ITEM)
 		{
 			switch (idx)
