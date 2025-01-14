@@ -167,6 +167,62 @@ bool GameManager::Battle(Character* player)
 
         case BATTLE_USEITEM:
             // player use item
+            vector<Item*> usableItems;
+            for (Item* item : player->GetInventory()) {
+                if (dynamic_cast<Weapon*>(item) == nullptr) {
+                    usableItems.push_back(item);
+                }
+            }
+
+            if (usableItems.empty()) {
+                cout << "사용 가능한 아이템이 없습니다.\n";
+                system("pause");
+                continue;
+            }
+
+            cout << "0. 뒤로가기\n";
+            for (size_t i = 0; i < usableItems.size(); ++i) {
+                cout << i + 1 << ". ";
+                usableItems[i]->printInfo();
+            }
+            cout << "사용할 아이템 번호를 선택하세요: ";
+
+            int itemChoice;
+            cin >> itemChoice;
+
+            if (cin.fail() || itemChoice < 0 || itemChoice > usableItems.size()) {
+                cin.clear();
+                cin.ignore(1024, '\n');
+                continue;
+            }
+
+            if (itemChoice == 0) {
+                continue;
+            }
+
+            int actualIndex = -1;
+            Item* selectedItem = usableItems[itemChoice - 1];
+
+            for (int i = 0; i < player->GetInventory().size(); ++i) {
+                if (player->GetInventory()[i] == selectedItem) {
+                    actualIndex = i;
+                    break;
+                }
+            }
+
+            if (actualIndex != -1) {
+                bool itemUsed = selectedItem->Use(player);
+                if (itemUsed) {
+                    player->SellItem(actualIndex);
+                    break;
+                }
+                
+                cout << "아이템을 사용할 수 없습니다.\n";
+                system("pause");
+                continue;
+            }
+
+            system("pause");
             break;
         }
 
