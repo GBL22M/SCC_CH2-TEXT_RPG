@@ -69,10 +69,6 @@ void Shop::BuyItem(int idx, Character* player)
 
 void Shop::SellItem(int idx, Character* player)
 {
-	if (idx < 0 || idx >= player->GetInventory().size()) {
-		cout << "잘못된 아이템 번호입니다.\n";
-		return;
-	}
 	Item* item = player->GetInventory()[idx];
 	Weapon* weapon = dynamic_cast<Weapon*>(item);
 
@@ -88,5 +84,7 @@ void Shop::SellItem(int idx, Character* player)
 
 void Shop::GetInfo(int idx)
 {
+	
+
 	AvailableItems[idx]->printInfo();
 }

@@ -480,9 +480,11 @@ OPEN_SHOP:
         cout << "구매할 아이템 번호 : ";
         cin >> input;
 
-        if (input > FIX_ITEM + WPN_ITEM)
+        if (!cin || input < 0 || input > shop->GetItemCount())
         {
             cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
             system("pause");
             goto BUY_ITEM;
         }
@@ -500,9 +502,11 @@ OPEN_SHOP:
         }
         cout << "판매할 아이템 번호 : ";
         cin >> input;
-        if (input > Player->GetInventory().size())
+        if (!cin || input < 0 || input > Player->GetInventory().size())
         {
             cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
             system("pause");
             goto SELL_ITEM;
         }
@@ -515,9 +519,11 @@ OPEN_SHOP:
         shop->DisplayItems(Player);
         cout << "정보를 확인하고 싶은 아이템 번호 : ";
         cin >> input;
-        if (input > FIX_ITEM + WPN_ITEM)
+        if (!cin || input < 0 || input > shop->GetItemCount())
         {
             cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
             system("pause");
             goto PNT_INFO;
         }
