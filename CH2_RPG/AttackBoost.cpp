@@ -1,4 +1,4 @@
-﻿#include "AttackBoost.h"
+#include "AttackBoost.h"
 #include "Character.h"
 
 AttackBoost::AttackBoost()
@@ -27,5 +27,5 @@ void AttackBoost::SellItem(Character* character)
 
 void AttackBoost::printInfo()
 {
-	cout << mName << " | 추가 공격력 : " << mAttackIncrease << endl;
+	cout << mName << " | 추가 공격력 : " << mAttackIncrease << " | 판매가 : " << nSellPrice << endl;
 }
