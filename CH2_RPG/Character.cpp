@@ -90,7 +90,7 @@ void Character::SetInventory(Item* item)
     if (item)
     {
         mInventory.push_back(item);
-        cout << item->GetName() << "획득!!\n";
+        cout << item->GetName() << " 획득!!\n";
     }
 }
 

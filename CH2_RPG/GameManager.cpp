@@ -71,7 +71,7 @@ bool GameManager::Battle(Character* player)
         switch (iMenu) {
         case BATTEL_ATTACK:
             //player attack
-            cout << player->GetName() << " 이(가) " << monster->GetName() << " 을(를) 공격합니다";
+            cout << player->GetName() << " 이(가) " << monster->GetName() << " 을(를) 공격합니다. ";
             monster->TakeDamage(player->GetAttack());
             cout << player->GetAttack() << " 데미지! "
                 << monster->GetName() << " 체력: " << monster->GetHealth() << "\n";
@@ -217,7 +217,6 @@ bool GameManager::Battle(Character* player)
                     break;
                 }
                 
-                cout << "아이템을 사용할 수 없습니다.\n";
                 system("pause");
                 continue;
             }
@@ -261,14 +260,14 @@ bool GameManager::Battle(Character* player)
                             << monster->GetName() << " 체력 : " << monster->GetHealth() << "\n";
                     }
                     else {
-                        cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다";
+                        cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다. ";
                         player->SetHealth(-monster->GetAttack());
                         cout << monster->GetAttack() << " 데미지! "
                             << player->GetName() << " 체력: " << player->GetHealth() << "\n";
                     }
                 }
                 else {
-                    cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다";
+                    cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다. ";
                     player->SetHealth(-monster->GetAttack());
                     cout << monster->GetAttack() << " 데미지! "
                         << player->GetName() << " 체력: " << player->GetHealth() << "\n";
@@ -288,7 +287,7 @@ bool GameManager::Battle(Character* player)
                         << monster->GetName() << " 체력 : " << monster->GetHealth() << "\n";
                 }
                 else {
-                    cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다";
+                    cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다. ";
                     player->SetHealth(-monster->GetAttack());
                     cout << monster->GetAttack() << " 데미지! "
                         << player->GetName() << " 체력: " << player->GetHealth() << "\n";
@@ -296,7 +295,7 @@ bool GameManager::Battle(Character* player)
             }
             //[monster attack]
             else {
-                cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다";
+                cout << monster->GetName() << " 이(가) " << player->GetName() << " 을(를) 공격합니다. ";
                 player->SetHealth(-monster->GetAttack());
                 cout << monster->GetAttack() << " 데미지! "
                     << player->GetName() << " 체력: " << player->GetHealth() << "\n";
@@ -550,8 +549,10 @@ bool GameManager::MonsterDeadCheck(Character* player, Monster* monster) {
     {
         if (monster->GetName() == "Boss Monster")
         {
+            cout << "\n===================================\n\n";
             cout << monster->GetName() << " 을(를) 처치했습니다!!\n";
             cout << "게임 클리어!\n";
+            cout << "\n===================================\n";
 
             GameOverFlag = true;
             return true;
@@ -560,7 +561,7 @@ bool GameManager::MonsterDeadCheck(Character* player, Monster* monster) {
         cout << monster->GetName() << " 이(가) 죽었습니다.\n";
         player->SetTotalMonsterKills();
         int golds = GetRandomInt(10, 20);
-        cout << player->GetName() << " 이(가) 50EXP와 " << golds << " 골드를 획득했습니다.";
+        cout << player->GetName() << " 이(가) 50EXP와 " << golds << " 골드를 획득했습니다. ";
 
         //item drop
         int itemDropProbability = GetRandomInt(1, 100);
@@ -603,8 +604,10 @@ bool GameManager::PlayerDeadCheck(Character* player)
 {
     if (player->GetHealth() == 0)
     {
+        cout << "\n===================================\n\n";
         cout << player->GetName() << " 이(가) 죽었습니다.\n";
         cout << "게임 오버\n";
+        cout << "\n===================================\n";
 
         return true;
     }

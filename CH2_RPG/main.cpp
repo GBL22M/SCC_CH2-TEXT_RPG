@@ -49,6 +49,7 @@ int main()
 			{
 				if (gameManager.GetGameOverFlag())
 				{
+					system("pause");
 					return 0;
 				}
 				gameManager.ResetShop(character);
@@ -56,6 +57,7 @@ int main()
 			//game 종료 (player 사망)
 			else
 			{
+				system("pause");
 				return 0;
 			}
 		}
