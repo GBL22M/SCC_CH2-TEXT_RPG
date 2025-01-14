@@ -480,7 +480,7 @@ OPEN_SHOP:
         cout << "구매할 아이템 번호 : ";
         cin >> input;
 
-        if (!cin || input < 0 || input > shop->GetItemCount())
+        if (!cin || input < 1 || input > shop->GetItemCount())
         {
             cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
             cin.clear();
@@ -502,7 +502,7 @@ OPEN_SHOP:
         }
         cout << "판매할 아이템 번호 : ";
         cin >> input;
-        if (!cin || input < 0 || input > Player->GetInventory().size())
+        if (!cin || input < 1 || input > Player->GetInventory().size())
         {
             cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
             cin.clear();
@@ -519,7 +519,7 @@ OPEN_SHOP:
         shop->DisplayItems(Player);
         cout << "정보를 확인하고 싶은 아이템 번호 : ";
         cin >> input;
-        if (!cin || input < 0 || input > shop->GetItemCount())
+        if (!cin || input < 1 || input > shop->GetItemCount())
         {
             cout << "잘못된 입력값입니다. 다시 입력해주세요." << endl;
             cin.clear();
