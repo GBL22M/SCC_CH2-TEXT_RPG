@@ -25,6 +25,8 @@ public:
 
 	// Information Section
 	void printInfo() override;
+	static Weapon* GetEquippedWeapon() { return equippedWeapon; }
+	bool IsEquipped() const { return isEquipped; }
 
 private:
 	string sName;
@@ -32,5 +34,8 @@ private:
 	int nEquipLevel;
 	int nBuyPrice;
 	int nSellPrice;
+
+	bool isEquipped = false;
+	static Weapon* equippedWeapon;
 };
 
