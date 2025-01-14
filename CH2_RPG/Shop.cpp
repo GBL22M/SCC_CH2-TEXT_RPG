@@ -1,4 +1,4 @@
-﻿#include "Shop.h"
+#include "Shop.h"
 
 void Shop::SetItems(Item* NewItem)
 {
@@ -32,13 +32,30 @@ void Shop::BuyItem(int idx, Character* player)
 	int PlayerGold = player->GetGold();
 
 	Item* BuyItem = AvailableItems[idx];
+	Item* NewItem;
 	int ItemPrice = BuyItem->GetBuyPrice();
 
 	if (PlayerGold >= ItemPrice)
 	{
 		player->SetInventory(BuyItem);
 		player->SetGold(PlayerGold - ItemPrice);
-		AvailableItems.erase(AvailableItems.begin() + idx);
+		if (idx < FIX_ITEM)
+		{
+			switch (idx)
+			{
+			case 0:
+				NewItem = new HealthPotion();
+				break;
+			case 1:
+				NewItem = new AttackBoost();
+				break;
+			default:
+				NewItem = nullptr;
+				break;
+			}
+			AvailableItems[idx] = NewItem;
+		}
+		else AvailableItems.erase(AvailableItems.begin() + idx);
 	}
 	else
 		cout << "골드가 부족하여 구매에 실패했습니다." << endl;
