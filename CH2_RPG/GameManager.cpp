@@ -448,21 +448,19 @@ Item* GameManager::GenerateWeapon(Character* player)
     return NewItem;
 }
 
+void GameManager::GenerateShop()
+{
+    shop = new Shop();
+}
+
 // Open Shop
 void GameManager::UseShop(Character* Player)
 {
-    Shop* shop = new Shop();
     int input;
-
-    for (int i = 0; i < WPN_ITEM; i++)
-    {
-        Item* item = GenerateWeapon(Player);        // Add random weapons based on player level
-        shop->SetItems(item);
-    }
 
 OPEN_SHOP:
     system("cls");
-    shop->DisplayItems();
+    shop->DisplayItems(Player);
 
     cout << "1. 구매   2. 판매  3. 정보 보기  AnyKey. 상점 나가기" << endl;
     cout << "입력 : ";
@@ -479,7 +477,7 @@ OPEN_SHOP:
     case 1:
     BUY_ITEM:
         system("cls");
-        shop->DisplayItems();
+        shop->DisplayItems(Player);
         cout << "구매할 아이템 번호 : ";
         cin >> input;
 
@@ -515,7 +513,7 @@ OPEN_SHOP:
     case 3:
     PNT_INFO:
         system("cls");
-        shop->DisplayItems();
+        shop->DisplayItems(Player);
         cout << "정보를 확인하고 싶은 아이템 번호 : ";
         cin >> input;
         if (input > FIX_ITEM + WPN_ITEM)
@@ -534,6 +532,17 @@ OPEN_SHOP:
     cout << "상점 이용을 종료합니다." << endl;
     system("pause");
     system("cls");
+}
+
+void GameManager::ResetShop(Character* Player)
+{
+    shop->ResetItems();
+
+    for (int i = 0; i < WPN_ITEM; i++)
+    {
+        Item* item = GenerateWeapon(Player);        // Add random weapons based on player level
+        shop->SetItems(item);
+    }
 }
 
 bool GameManager::MonsterDeadCheck(Character* player, Monster* monster) {

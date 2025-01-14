@@ -2,17 +2,23 @@
 
 void Shop::SetItems(Item* NewItem)
 {
-	if (AvailableItems.size() == FIX_ITEM + WPN_ITEM)
-	{
-		for (int i = 0; i < WPN_ITEM; i++)
-			AvailableItems.pop_back();
-	}
 	AvailableItems.push_back(NewItem);
 }
 
-void Shop::DisplayItems()
+void Shop::ResetItems()
 {
-	cout << "\n==============SHOP==================\n\n";
+	int size = AvailableItems.size();
+	if (size > FIX_ITEM)
+	{
+		for (int i = 0; i < size - FIX_ITEM; i++)
+			AvailableItems.pop_back();
+	}
+}
+
+void Shop::DisplayItems(Character* player)
+{
+	cout << "\n==============SHOP==================\n보유 골드 : " << player->GetGold() << "gold" << endl;
+	cout << "====================================\n";
 
 	for (int i = 0; i < AvailableItems.size(); i += 2)
 	{

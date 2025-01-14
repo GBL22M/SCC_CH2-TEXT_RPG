@@ -23,13 +23,16 @@ public:
 		AvailableItems.push_back(AtkBoost);
 	}
 	void SetItems(Item* NewItem);
+	void ResetItems();
 
-	void DisplayItems();
+	void DisplayItems(Character* player);
 
 	void BuyItem(int idx, Character* player);
 	void SellItem(int idx, Character* player);
 
 	void GetInfo(int idx);
+
+	int GetItemCount() { return (int)AvailableItems.size(); }
 
 private:
 	vector<Item*> AvailableItems;

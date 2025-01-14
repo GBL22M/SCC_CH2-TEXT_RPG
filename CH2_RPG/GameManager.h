@@ -18,7 +18,9 @@ public:
 	void ManageInventory(Character* player);
 
 	Item* GenerateWeapon(Character* Player);
+	void GenerateShop();
 	void UseShop(Character* Player);
+	void ResetShop(Character* Player);
 
 	bool MonsterDeadCheck(Character* player, Monster* monster);
 	bool PlayerDeadCheck(Character* player);
@@ -26,4 +28,5 @@ public:
 private:
 	const int mTotalMonsterCount = 3;
 	bool GameOverFlag = false;
+	class Shop* shop;
 };

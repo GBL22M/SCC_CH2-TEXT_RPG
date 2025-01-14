@@ -21,6 +21,9 @@ int main()
 	system("pause");
 	system("cls");
 
+	gameManager.GenerateShop();
+	gameManager.ResetShop(character);
+
 	//종료 조건
 	while (1)
 	{
@@ -48,6 +51,7 @@ int main()
 				{
 					return 0;
 				}
+				gameManager.ResetShop(character);
 			}
 			//game 종료 (player 사망)
 			else
