@@ -21,6 +21,7 @@ public:
 	//getter
 	int GetLevel() { return mLevel; }
 	int GetHealth() { return mHealth; }
+	int GetMaxHealth() { return mMaxHealth; }
 	int GetAttack() { return mAttack; }
 	int GetExperience() { return mExperience; }
 	int GetGold() { return mGold; }

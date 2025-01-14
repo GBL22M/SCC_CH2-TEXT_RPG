@@ -15,6 +15,7 @@ public:
 	Monster* GenerateMonster(int level);
 	bool Battle(Character* player);
 	void DisplayInventory(Character* player);
+	void ManageInventory(Character* player);
 
 	Item* GenerateWeapon(Character* Player);
 	void UseShop(Character* Player);

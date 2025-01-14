@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <windows.h>
 #include "GameManager.h"
 #include "Character.h"
@@ -60,7 +60,7 @@ int main()
 			//인벤토리
 			system("cls");
 			cout << "\n============INVENTORY==================\n\n";
-			gameManager.DisplayInventory(character);
+			gameManager.ManageInventory(character);
 			cout << "\n===================================\n\n";
 			system("pause");
 			system("cls");

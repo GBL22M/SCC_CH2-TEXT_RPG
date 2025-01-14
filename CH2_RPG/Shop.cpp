@@ -1,4 +1,4 @@
-#include "Shop.h"
+﻿#include "Shop.h"
 
 void Shop::SetItems(Item* NewItem)
 {
@@ -63,11 +63,21 @@ void Shop::BuyItem(int idx, Character* player)
 
 void Shop::SellItem(int idx, Character* player)
 {
+	if (idx < 0 || idx >= player->GetInventory().size()) {
+		cout << "잘못된 아이템 번호입니다.\n";
+		return;
+	}
+	Item* item = player->GetInventory()[idx];
+	Weapon* weapon = dynamic_cast<Weapon*>(item);
+
+	if (weapon && weapon == Weapon::GetEquippedWeapon()) {
+		weapon->Use(player);
+	}
 	Item* temp = player->GetInventory()[idx];
 
 	player->SellItem(idx);
-
 	temp->SellItem(player);
+	cout << "아이템을 판매했습니다.\n";
 }
 
 void Shop::GetInfo(int idx)

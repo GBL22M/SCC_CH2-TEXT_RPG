@@ -6,7 +6,7 @@ class AttackBoost : public Item
 public:
 	AttackBoost();
 	string GetName() override;
-	void Use(Character* character) override;
+	bool Use(Character* character) override;
 
 	// Price Section
 	int GetBuyPrice() override { return nBuyPrice; }

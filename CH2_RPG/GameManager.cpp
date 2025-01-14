@@ -167,6 +167,62 @@ bool GameManager::Battle(Character* player)
 
         case BATTLE_USEITEM:
             // player use item
+            vector<Item*> usableItems;
+            for (Item* item : player->GetInventory()) {
+                if (dynamic_cast<Weapon*>(item) == nullptr) {
+                    usableItems.push_back(item);
+                }
+            }
+
+            if (usableItems.empty()) {
+                cout << "사용 가능한 아이템이 없습니다.\n";
+                system("pause");
+                continue;
+            }
+
+            cout << "0. 뒤로가기\n";
+            for (size_t i = 0; i < usableItems.size(); ++i) {
+                cout << i + 1 << ". ";
+                usableItems[i]->printInfo();
+            }
+            cout << "사용할 아이템 번호를 선택하세요: ";
+
+            int itemChoice;
+            cin >> itemChoice;
+
+            if (cin.fail() || itemChoice < 0 || itemChoice > usableItems.size()) {
+                cin.clear();
+                cin.ignore(1024, '\n');
+                continue;
+            }
+
+            if (itemChoice == 0) {
+                continue;
+            }
+
+            int actualIndex = -1;
+            Item* selectedItem = usableItems[itemChoice - 1];
+
+            for (int i = 0; i < player->GetInventory().size(); ++i) {
+                if (player->GetInventory()[i] == selectedItem) {
+                    actualIndex = i;
+                    break;
+                }
+            }
+
+            if (actualIndex != -1) {
+                bool itemUsed = selectedItem->Use(player);
+                if (itemUsed) {
+                    player->SellItem(actualIndex);
+                    break;
+                }
+                
+                cout << "아이템을 사용할 수 없습니다.\n";
+                system("pause");
+                continue;
+            }
+
+            system("pause");
             break;
         }
 
@@ -283,6 +339,17 @@ bool GameManager::Battle(Character* player)
 
 void GameManager::DisplayInventory(Character* player)
 {
+    cout << "\n[ 장착 중인 장비 ]\n";
+    if (Weapon::GetEquippedWeapon()) {
+        cout << "무기: ";
+        Weapon::GetEquippedWeapon()->printInfo();
+    }
+    else {
+        cout << "무기: (없음)\n";
+    }
+
+    cout << "\n[ 보유 아이템 ]\n";
+
     if (player->GetInventory().empty())
     {
         cout << "인벤토리가 비었습니다\n";
@@ -293,7 +360,62 @@ void GameManager::DisplayInventory(Character* player)
         for (auto item : player->GetInventory())
         {
             cout << ++idx << ". ";
+            if (item == Weapon::GetEquippedWeapon()) {
+                cout << "[장착중] ";
+            }
             item->printInfo();
+        }
+    }
+}
+
+void GameManager::ManageInventory(Character* player)
+{
+    while (1) {
+        system("cls");
+        cout << "\n============인벤토리==================\n\n";
+        DisplayInventory(player);
+
+        cout << "\n===================================\n\n";
+        cout << "1. 아이템 사용/해제  AnyKey. 상점 나가기" << endl;
+        cout << "입력 : ";
+
+        int input;
+        cin >> input;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(1024, '\n');
+            return;
+        }
+
+        if (input == 1) {
+            if (player->GetInventory().empty()) {
+                cout << "인벤토리가 비었습니다.\n";
+                system("pause");
+                continue;
+            }
+
+            cout << "사용/해제할 아이템 번호를 입력하세요: ";
+            cin >> input;
+
+            if (input > 0 && input <= player->GetInventory().size()) {
+                Item* selectedItem = player->GetInventory()[input - 1];
+                Weapon* weapon = dynamic_cast<Weapon*>(selectedItem);
+
+                if (weapon) {
+                    weapon->Use(player);
+                }
+                else {
+                    bool itemUsed = selectedItem->Use(player);
+                    if (itemUsed) {
+                        player->SellItem(input - 1);
+                    }
+                }
+                system("pause");
+            }
+        }
+        else {
+            return;
         }
     }
 }

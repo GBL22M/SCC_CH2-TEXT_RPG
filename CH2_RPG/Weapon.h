@@ -13,7 +13,7 @@ public:
 		nSellPrice = (int)(nBuyPrice * 0.7);
 	}
 	string GetName() override { return sName; }
-	void Use(Character* character) override;
+	bool Use(Character* character) override;
 
 	// Price Section
 	int GetBuyPrice() { return nBuyPrice; }
@@ -25,6 +25,8 @@ public:
 
 	// Information Section
 	void printInfo() override;
+	static Weapon* GetEquippedWeapon() { return equippedWeapon; }
+	bool IsEquipped() const { return isEquipped; }
 
 private:
 	string sName;
@@ -32,5 +34,8 @@ private:
 	int nEquipLevel;
 	int nBuyPrice;
 	int nSellPrice;
+
+	bool isEquipped = false;
+	static Weapon* equippedWeapon;
 };
 
