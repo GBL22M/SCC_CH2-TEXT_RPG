@@ -271,6 +271,20 @@ bool GameManager::Battle(Character* player)
                     player->SetHealth(-monster->GetAttack());
                     cout << monster->GetAttack() << " 데미지! "
                         << player->GetName() << " 체력: " << player->GetHealth() << "\n";
+
+                    //[boss skill attack]
+                    if (monster->GetName() == "Boss Monster")
+                    {
+                        int skillProbability = GetRandomInt(1, 100);
+                        if (skillProbability <= 40)
+                        {
+                            int skillDamage = static_cast<BossMonster*>(monster)->SkillAttackDamage();
+                            cout << monster->GetName() << " 의 스킬 공격!";
+                            player->SetHealth(-skillDamage);
+                            cout << skillDamage << " 데미지! "
+                                << player->GetName() << " 체력: " << player->GetHealth() << "\n";
+                        }
+                    }
                 }
             }
         }
