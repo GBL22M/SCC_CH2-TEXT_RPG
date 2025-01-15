@@ -389,7 +389,7 @@ void GameManager::ManageInventory(Character* player)
         DisplayInventory(player);
 
         cout << "\n===================================\n\n";
-        cout << "1. 아이템 사용/해제  AnyKey. 상점 나가기" << endl;
+        cout << "1. 아이템 사용/해제  AnyKey. 인벤토리 나가기" << endl;
         cout << "입력 : ";
 
         int input;
