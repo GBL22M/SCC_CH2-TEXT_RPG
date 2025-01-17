@@ -1,4 +1,4 @@
-﻿#include <iostream>
+﻿﻿#include <iostream>
 #include <random>
 
 #include "GameManager.h"
@@ -13,6 +13,8 @@
 #include "Item.h"
 #include "HealthPotion.h"
 #include "AttackBoost.h"
+
+using namespace std;
 
 Monster* GameManager::GenerateMonster(int level)
 {
@@ -64,7 +66,7 @@ bool GameManager::Battle(Character* player)
         }
 
         if (iMenu == BATTLE_BACK)
-            return true;        
+            return true;
 
         cout << "\n\n";
 
@@ -89,11 +91,11 @@ bool GameManager::Battle(Character* player)
             cout << "몬스터 " << monster->GetName() << " 등장! | 체력: "
                 << monster->GetHealth() << " 공격력: " << monster->GetAttack() << "\n\n";
 
-            if (player->GetLevel() >= 3)
+            if (player->GetLevel() >= player->tSkillTable[AS_SHOCK].iUseLevel)
                 cout << "1. 마비\n";
-            if (player->GetLevel() >= 6)
+            if (player->GetLevel() >= player->tSkillTable[AS_BLEEDING].iUseLevel)
                 cout << "2. 출혈\n";
-            if (player->GetLevel() >= 9)
+            if (player->GetLevel() >= player->tSkillTable[AS_DISARRAY].iUseLevel)
                 cout << "3. 혼란\n";
             cout << "0. 뒤로가기\n";
             cout << "메뉴를 선택하세요 : ";
@@ -111,7 +113,7 @@ bool GameManager::Battle(Character* player)
             switch (iMenu) {
             case 1:
                 // player use shock
-                if (player->GetLevel() >= 3) {
+                if (player->GetLevel() >= player->tSkillTable[AS_SHOCK].iUseLevel) {
                     if (player->tSkillTable[AS_SHOCK].iCooldown == 0) {
                         cout << player->GetName() << " 이(가) " << monster->GetName() << " 에게 마비 스킬을 사용합니다.!\n";
                         monster->TakeDamage(player->tSkillTable[AS_SHOCK].iDamage);
@@ -130,7 +132,7 @@ bool GameManager::Battle(Character* player)
 
             case 2:
                 // player use bleeding
-                if (player->GetLevel() >= 6) {
+                if (player->GetLevel() >= player->tSkillTable[AS_BLEEDING].iUseLevel) {
                     if (player->tSkillTable[AS_BLEEDING].iCooldown == 0) {
                         cout << player->GetName() << " 이(가) " << monster->GetName() << " 에게 출혈 스킬을 사용합니다.!\n";
                         monster->TakeDamage(player->tSkillTable[AS_BLEEDING].iDamage);
@@ -149,7 +151,7 @@ bool GameManager::Battle(Character* player)
 
             case 3:
                 // player use disarray
-                if (player->GetLevel() >= 9) {
+                if (player->GetLevel() >= player->tSkillTable[AS_DISARRAY].iUseLevel) {
                     cout << player->GetName() << " 이(가) " << monster->GetName() << " 에게 혼란 스킬을 사용합니다.!\n";
                     monster->ASCheck[AS_DISARRAY] = player->UseSkill(AS_DISARRAY);
                 }
@@ -216,7 +218,7 @@ bool GameManager::Battle(Character* player)
                     player->SellItem(actualIndex);
                     break;
                 }
-                
+
                 system("pause");
                 continue;
             }
@@ -336,7 +338,7 @@ bool GameManager::Battle(Character* player)
 
         // [player death]
         if (PlayerDeadCheck(player))
-            return false;       
+            return false;
 
         // player skill cooldown
         if (player->tSkillTable[AS_SHOCK].iCooldown > 0)
@@ -347,7 +349,7 @@ bool GameManager::Battle(Character* player)
             player->tSkillTable[AS_DISARRAY].iCooldown--;
 
         system("pause");
-    }    
+    }
 }
 
 void GameManager::DisplayInventory(Character* player)
@@ -389,7 +391,7 @@ void GameManager::ManageInventory(Character* player)
         DisplayInventory(player);
 
         cout << "\n===================================\n\n";
-        cout << "1. 아이템 사용/해제  AnyKey. 상점 나가기" << endl;
+        cout << "1. 아이템 사용/해제  AnyKey. 인벤토리 나가기" << endl;
         cout << "입력 : ";
 
         int input;
@@ -437,7 +439,7 @@ void GameManager::ManageInventory(Character* player)
 Item* GameManager::GenerateWeapon(Character* player)
 {
     Item* NewItem;
-    
+
     int Lucky = GetRandomInt(1, 10) * player->GetLevel();
 
     // Drop quality based on player level
@@ -479,10 +481,10 @@ OPEN_SHOP:
     cout << "입력 : ";
     cin >> input;
 
-    if (cin.fail()) 
+    if (cin.fail())
     {
         cin.clear();
-        cin.ignore(1024, '\n');     
+        cin.ignore(1024, '\n');
     }
 
     switch (input)
@@ -588,12 +590,12 @@ bool GameManager::MonsterDeadCheck(Character* player, Monster* monster) {
         if (itemDropProbability <= 30)
         {
             Item* item;
-            if (itemDropProbability <= 13)                  
+            if (itemDropProbability <= 13)
             {
                 item = new HealthPotion();
                 player->SetInventory(item);
             }
-            else if(itemDropProbability > 13 && itemDropProbability <= 26)
+            else if (itemDropProbability > 13 && itemDropProbability <= 26)
             {
                 item = new AttackBoost();
                 player->SetInventory(item);
